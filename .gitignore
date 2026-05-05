@@ -166,5 +166,3 @@ validation/reference/
 *.npy
 !tests/data/*.npy
 
-paper/*
-!paper/UNDERSTANDING.md

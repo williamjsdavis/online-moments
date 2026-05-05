@@ -28,8 +28,6 @@ from online_moments.reductions import kramers_moyal_regression
 
 from _common import (
     FIGURES_DIR,
-    PAPER_DIR,
-    render_paper_page_as_image,
     simulate_tristable,
     simulate_tristable_chunk,
     stream_simulator,
@@ -157,51 +155,6 @@ def plot(result: dict, out_path: Path) -> Path:
     return out_path
 
 
-def plot_side_by_side(result: dict, panel: str, out_path: Path) -> Path | None:
-    pdf_path = PAPER_DIR / f"figure-2{panel}.pdf"
-    img = render_paper_page_as_image(pdf_path)
-    if img is None:
-        return None
-
-    x = result["x_eval"]
-    n_kbr = result["n_kbr"]
-    n_okbr = result["n_okbr"]
-    fig, axes = plt.subplots(1, 2, figsize=(13, 5))
-
-    ax = axes[0]
-    if panel == "a":
-        x_dense = np.linspace(-1.4, 1.4, 400)
-        ax.plot(x_dense, true_drift(x_dense), "k--", lw=1.2, label="true $D^{(1)}$")
-        ax.axhline(0, color="lightgray", lw=0.5)
-        ax.plot(x, result["D1_kbr"], "rx", ms=10, mew=1.5,
-                label=f"KBR, N={_fmt(n_kbr)}")
-        ax.plot(x, result["D1_okbr"], "g+", ms=10, mew=1.5,
-                label=f"OKBR, N={_fmt(n_okbr)}")
-        ax.set_ylabel(r"$D^{(1)}(x)$")
-        ax.set_ylim(-3.5, 3.5)
-    else:
-        ax.axhline(0.7, color="k", linestyle="--", lw=1.2,
-                   label=r"true $D^{(2)}=0.7$")
-        ax.plot(x, result["D2_kbr"], "rx", ms=10, mew=1.5,
-                label=f"KBR, N={_fmt(n_kbr)}")
-        ax.plot(x, result["D2_okbr"], "g+", ms=10, mew=1.5,
-                label=f"OKBR, N={_fmt(n_okbr)}")
-        ax.set_ylabel(r"$D^{(2)}(x)$")
-        ax.set_ylim(0.0, 1.5)
-    ax.set_xlabel(r"$x$")
-    ax.legend(fontsize=9, loc="best")
-    ax.set_title(f"Python (this implementation) — panel {panel}")
-
-    axes[1].imshow(img)
-    axes[1].set_title(f"Paper figure-2{panel}.pdf (reference)")
-    axes[1].axis("off")
-
-    fig.tight_layout()
-    fig.savefig(out_path, dpi=120)
-    plt.close(fig)
-    return out_path
-
-
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--n-kbr", type=int, default=None,
@@ -227,13 +180,6 @@ def main() -> None:
     result = run(n_kbr, n_okbr, seed=args.seed)
     out_solo = plot(result, FIGURES_DIR / "figure_2_python.png")
     print(f"  wrote {out_solo}")
-
-    out_a = plot_side_by_side(result, "a", FIGURES_DIR / "figure_2a_side_by_side.png")
-    out_b = plot_side_by_side(result, "b", FIGURES_DIR / "figure_2b_side_by_side.png")
-    if out_a:
-        print(f"  wrote {out_a}")
-    if out_b:
-        print(f"  wrote {out_b}")
 
 
 if __name__ == "__main__":

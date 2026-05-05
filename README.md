@@ -5,7 +5,7 @@ for conditional moments of stochastic-process increments. Recovers drift `D^(1)(
 diffusion `D^(2)(x)` of a Langevin SDE from time-series data of arbitrary length, including
 data streams that don't fit in memory.
 
-Implements the method of *Davis 2023, PRE 108 054110* (`paper/2307.00445v3.pdf`).
+Implements the method of *Davis 2023, PRE 108 054110* ([DOI:10.1103/PhysRevE.108.054110](https://doi.org/10.1103/PhysRevE.108.054110)).
 
 ## Quick start
 
@@ -44,16 +44,15 @@ Requires Python 3.11+. The streaming inner loop uses Numba; first call has a
 
 - `src/online_moments/` — library
 - `tests/` — unit tests, offline tests, online-vs-offline equivalence tests
-- `validation/` — paper-figure reproduction (Figure 1 OU, Figure 2 tri-stable, scaling
-  benchmark). Each driver renders a side-by-side PNG against the corresponding paper figure.
-- `paper/UNDERSTANDING.md` — written summary of the algorithm
+- `validation/` — paper-figure reproduction (Figure 1 OU, Figure 2 tri-stable, scaling benchmark)
 - `docs/compared_to_julia.md` — intentional differences from the Julia reference
+- `docs/theory.md` — math restated with file pointers
 - `OnlineMoments.jl/` — the Julia reference implementation (gitignored)
 
 ## Verification
 
 ```bash
 pytest tests/ -v                          # unit + equivalence tests
-bash validation/run_smoke.sh              # generates side-by-side figures (CI sizes)
-python validation/figure_1_ou.py --full   # full N=1e9 reproduction (manual)
+bash validation/run_smoke.sh              # generates validation figures (CI sizes)
+python validation/figure_1_ou.py --full   # full N=10^10 reproduction (manual)
 ```

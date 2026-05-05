@@ -1,8 +1,9 @@
 # Theory: streaming conditional moments and Kramers–Moyal coefficients
 
 A concise restatement of the mathematics implemented in this package, with
-references back to *Davis 2023, PRE 108 054110* (`paper/2307.00445v3.pdf`) and
-to a longer summary at `paper/UNDERSTANDING.md`.
+references back to *Davis 2023, PRE 108 054110*
+([DOI:10.1103/PhysRevE.108.054110](https://doi.org/10.1103/PhysRevE.108.054110),
+[arXiv:2307.00445](https://arxiv.org/abs/2307.00445)).
 
 ## 1. Setup
 

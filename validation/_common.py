@@ -14,7 +14,6 @@ from numba import njit
 
 
 REPO_ROOT = Path(__file__).resolve().parent.parent
-PAPER_DIR = REPO_ROOT / "paper"
 FIGURES_DIR = REPO_ROOT / "validation" / "figures"
 FIGURES_DIR.mkdir(exist_ok=True)
 
@@ -209,20 +208,3 @@ def stream_simulator(
         remaining -= c
 
 
-def render_paper_page_as_image(pdf_path: Path, dpi: int = 150) -> np.ndarray | None:
-    """Render the first page of a single-page PDF to a NumPy RGB array.
-
-    Returns None if pdf2image / poppler is not available — drivers should fall
-    back to plotting only the Python output in that case.
-    """
-    try:
-        from pdf2image import convert_from_path
-    except ImportError:
-        return None
-    try:
-        pages = convert_from_path(str(pdf_path), dpi=dpi)
-    except Exception:
-        return None
-    if not pages:
-        return None
-    return np.asarray(pages[0])

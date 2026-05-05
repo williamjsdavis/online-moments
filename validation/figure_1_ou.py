@@ -28,8 +28,6 @@ from online_moments import OKBR, Epanechnikov, kbr_moments
 
 from _common import (
     FIGURES_DIR,
-    PAPER_DIR,
-    render_paper_page_as_image,
     simulate_ou,
     simulate_ou_chunk,
     stream_simulator,
@@ -147,54 +145,6 @@ def plot(result: dict, out_path: Path) -> Path:
     return out_path
 
 
-def plot_side_by_side(result: dict, panel: str, out_path: Path) -> Path | None:
-    pdf_path = PAPER_DIR / f"figure-1{panel}.pdf"
-    img = render_paper_page_as_image(pdf_path)
-    if img is None:
-        return None
-
-    x = result["x_eval"]
-    n_small = result["n_small"]
-    n_large = result["n_large"]
-    fig, axes = plt.subplots(1, 2, figsize=(13, 5))
-
-    ax = axes[0]
-    if panel == "a":
-        ax.axhline(0, color="lightgray", lw=0.5)
-        ax.plot(x, -x, "k--", lw=1.2, label=r"true $D^{(1)}=-x$")
-        ax.plot(x, result["D1_kbr"], "rx", ms=10, mew=1.5,
-                label=f"KBR, N={_fmt(n_small)}")
-        ax.plot(x, result["D1_okbr_small"], "g+", ms=10, mew=1.5,
-                label=f"OKBR, N={_fmt(n_small)}")
-        ax.plot(x, result["D1_okbr_large"], "o", ms=7, mfc="none", mec="C0",
-                label=f"OKBR, N={_fmt(n_large)}")
-        ax.set_ylabel(r"$D^{(1)}(x)$")
-        ax.set_ylim(-7.5, 7.5)
-    else:
-        ax.axhline(1.0, color="k", linestyle="--", lw=1.2,
-                   label=r"true $D^{(2)}=1$")
-        ax.plot(x, result["D2_kbr"], "rx", ms=10, mew=1.5,
-                label=f"KBR, N={_fmt(n_small)}")
-        ax.plot(x, result["D2_okbr_small"], "g+", ms=10, mew=1.5,
-                label=f"OKBR, N={_fmt(n_small)}")
-        ax.plot(x, result["D2_okbr_large"], "o", ms=7, mfc="none", mec="C0",
-                label=f"OKBR, N={_fmt(n_large)}")
-        ax.set_ylabel(r"$D^{(2)}(x)$")
-        ax.set_ylim(-0.2, 2.0)
-    ax.set_xlabel(r"$x$")
-    ax.legend(fontsize=9, loc="best")
-    ax.set_title(f"Python (this implementation) — panel {panel}")
-
-    axes[1].imshow(img)
-    axes[1].set_title(f"Paper figure-1{panel}.pdf (reference)")
-    axes[1].axis("off")
-
-    fig.tight_layout()
-    fig.savefig(out_path, dpi=120)
-    plt.close(fig)
-    return out_path
-
-
 def main() -> None:
     parser = argparse.ArgumentParser()
     parser.add_argument("--n-small", type=int, default=None,
@@ -220,13 +170,6 @@ def main() -> None:
     result = run(n_small, n_large, seed=args.seed)
     out_solo = plot(result, FIGURES_DIR / "figure_1_python.png")
     print(f"  wrote {out_solo}")
-
-    out_a = plot_side_by_side(result, "a", FIGURES_DIR / "figure_1a_side_by_side.png")
-    out_b = plot_side_by_side(result, "b", FIGURES_DIR / "figure_1b_side_by_side.png")
-    if out_a:
-        print(f"  wrote {out_a}")
-    if out_b:
-        print(f"  wrote {out_b}")
 
 
 if __name__ == "__main__":

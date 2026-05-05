@@ -12,9 +12,10 @@ increments described in *Davis 2023, PRE 108 054110* (arXiv:2307.00445).
 
 ## Reference materials
 
-- **Paper PDF**: `paper/2307.00445v3.pdf`
-- **Paper LaTeX source**: `paper/manuscript.tex`
-- **Algorithm summary** (written to support the port): `paper/UNDERSTANDING.md`
+- **Paper**: *Davis 2023, PRE 108 054110*
+  ([DOI:10.1103/PhysRevE.108.054110](https://doi.org/10.1103/PhysRevE.108.054110),
+  [arXiv:2307.00445](https://arxiv.org/abs/2307.00445)). Reviewer should obtain
+  their own copy.
 - **Theory restated as code**: `docs/theory.md`
 - **Intentional differences from Julia**: `docs/compared_to_julia.md`
 
@@ -52,11 +53,7 @@ Test fixture: `tests/data/X_data_small.npy` (100 floats, ported from
 ## Visual evidence
 
 - `validation/figures/figure_1_python.png` — Python OU-process result (drift, diffusion)
-- `validation/figures/figure_1a_side_by_side.png` — Python panel a next to `paper/figure-1a.pdf`
-- `validation/figures/figure_1b_side_by_side.png` — Python panel b next to `paper/figure-1b.pdf`
 - `validation/figures/figure_2_python.png` — Python tri-stable result
-- `validation/figures/figure_2a_side_by_side.png` — Python panel a next to `paper/figure-2a.pdf`
-- `validation/figures/figure_2b_side_by_side.png` — Python panel b next to `paper/figure-2b.pdf`
 - `validation/figures/scaling.png` — Python reproduction of the paper's Table 1 (time + memory vs N)
 - `validation/figures/scaling.csv` — raw timing/memory numbers backing `scaling.png`
 
@@ -70,7 +67,8 @@ A fresh reviewing agent should be given roughly:
 
 > Compare `src/online_moments/online/okbr.py` and
 > `src/online_moments/online/_inner_loop.py::okbr_update` against
-> `OnlineMoments.jl/src/OKBR.jl` and §III of `paper/2307.00445v3.pdf`.
+> `OnlineMoments.jl/src/OKBR.jl` and §III of the paper
+> (DOI:10.1103/PhysRevE.108.054110).
 >
 > Verify:
 > (a) the kernel-weighted update of `M^(k)_{ij}` matches paper eq. 14;
@@ -81,10 +79,9 @@ A fresh reviewing agent should be given roughly:
 >     `docs/compared_to_julia.md` §2);
 > (d) `tests/online/test_okbr_vs_offline.py` actually exercises the streaming
 >     update path (not a tautology calling the same function);
-> (e) `validation/figures/figure_1_side_by_side.png`,
->     `figure_2_side_by_side.png`, and `scaling.png` visually match the
->     corresponding paper panels and the paper's Table 1 — flag any
->     systematic deviation.
+> (e) `validation/figures/figure_1_python.png`, `figure_2_python.png`, and
+>     `scaling.png` visually match the corresponding paper panels and the
+>     paper's Table 1 — flag any systematic deviation.
 >
 > Report: substantive issues (correctness, scientific accuracy) first;
 > stylistic suggestions second; positive observations last. If the
