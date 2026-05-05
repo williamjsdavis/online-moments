@@ -110,7 +110,7 @@ def plot(result: dict, out_path: Path) -> Path:
     x = result["x_eval"]
     n_small = result["n_small"]
     n_large = result["n_large"]
-    fig, axes = plt.subplots(2, 1, figsize=(7, 8), sharex=True)
+    fig, axes = plt.subplots(1, 2, figsize=(13, 5))
 
     ax = axes[0]
     ax.axhline(0, color="lightgray", lw=0.5)
@@ -121,9 +121,9 @@ def plot(result: dict, out_path: Path) -> Path:
             label=f"OKBR, N={_fmt(n_small)}")
     ax.plot(x, result["D1_okbr_large"], "o", ms=7, mfc="none", mec="C0",
             label=f"OKBR, N={_fmt(n_large)}")
+    ax.set_xlabel(r"$x$")
     ax.set_ylabel(r"drift $D^{(1)}(x)$")
     ax.legend(fontsize=9, loc="upper right")
-    ax.set_title("Figure 1 reproduction: Ornstein-Uhlenbeck (Python)")
     ax.set_ylim(-7.5, 7.5)
 
     ax = axes[1]
@@ -139,6 +139,7 @@ def plot(result: dict, out_path: Path) -> Path:
     ax.legend(fontsize=9, loc="lower center")
     ax.set_ylim(-0.2, 2.0)
 
+    fig.suptitle("Figure 1 reproduction: Ornstein-Uhlenbeck (Python)", fontsize=12)
     fig.tight_layout()
     fig.savefig(out_path, dpi=120)
     plt.close(fig)

@@ -109,7 +109,7 @@ def plot(result: dict, out_path: Path) -> Path:
     x = result["x_eval"]
     n_kbr = result["n_kbr"]
     n_okbr = result["n_okbr"]
-    fig, axes = plt.subplots(2, 1, figsize=(7, 8.5), sharex=True)
+    fig, axes = plt.subplots(1, 2, figsize=(13, 5.5))
 
     ax = axes[0]
     x_dense = np.linspace(-1.4, 1.4, 400)
@@ -120,9 +120,9 @@ def plot(result: dict, out_path: Path) -> Path:
             label=f"KBR, N={_fmt(n_kbr)}")
     ax.plot(x, result["D1_okbr"], "g+", ms=10, mew=1.5,
             label=f"OKBR, N={_fmt(n_okbr)}")
+    ax.set_xlabel(r"$x$")
     ax.set_ylabel(r"drift $D^{(1)}(x)$")
     ax.legend(fontsize=9, loc="upper center")
-    ax.set_title("Figure 2 reproduction: tri-stable system (Python)")
     ax.set_ylim(-3.5, 3.5)
 
     # Inset zoom of the central weak-attractor region (paper's inset)
@@ -149,6 +149,7 @@ def plot(result: dict, out_path: Path) -> Path:
     ax.legend(fontsize=9, loc="upper center")
     ax.set_ylim(0.0, 1.5)
 
+    fig.suptitle("Figure 2 reproduction: tri-stable system (Python)", fontsize=12)
     fig.tight_layout()
     fig.savefig(out_path, dpi=120)
     plt.close(fig)
