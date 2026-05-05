@@ -2,8 +2,6 @@
 
 A Python port of [`OnlineMoments.jl`](https://github.com/williamjsdavis/OnlineMoments.jl) — streaming, $\mathcal{O}(1)$-space estimators for conditional moments of stochastic-process increments. Recovers the drift $D^{(1)}(x)$ and diffusion $D^{(2)}(x)$ of a Langevin SDE from time-series data of arbitrary length, including streamed data that does not fit in memory.
 
-![Tri-stable system: OKBR at N=10^10 resolves the weak central attractor that KBR at N=5×10^7 cannot](assets/figure_2_python.png)
-
 ## Background
 
 For a scalar stochastic process satisfying the Itô-interpreted Langevin SDE
@@ -71,6 +69,8 @@ Each driver in `validation/` simulates the relevant SDE end-to-end, streams it t
 At $N = 10^7$ the offline KBR (×) and streaming OKBR (+) overlay exactly — the streaming Welford recurrence is algebraically equivalent to the offline kernel sum. Both fail outside $|x| \gtrsim 4$ where the OU process rarely visits. The streaming $N = 10^{10}$ run (○) — impossible to compute offline because the trajectory is 80 GB — extends the resolved drift cleanly to $\pm 5$.
 
 ### Figure 2 — tri-stable system ($D^{(1)} = -x + 27 x^3 - 26 x^5$)
+
+![Tri-stable system: OKBR at N=10^10 resolves the weak central attractor that KBR at N=5×10^7 cannot](assets/figure_2_python.png)
 
 The hero image at the top shows the headline result. The system has three attractors: strong wells at $x = \pm 1$ and a *weak* one at $x = 0$. KBR at $N = 5 \times 10^7$ scatters in the central $|x| < 0.5$ region; OKBR at $N = 10^{10}$ resolves the weak central attractor cleanly.
 
