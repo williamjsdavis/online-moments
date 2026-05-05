@@ -161,3 +161,10 @@ cython_debug/
 
 # Project-specific
 OnlineMoments.jl/
+validation/figures/
+validation/reference/
+*.npy
+!tests/data/*.npy
+
+paper/*
+!paper/UNDERSTANDING.md
