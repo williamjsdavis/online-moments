@@ -5,6 +5,8 @@ for conditional moments of stochastic-process increments. Recovers drift `D^(1)(
 diffusion `D^(2)(x)` of a Langevin SDE from time-series data of arbitrary length, including
 data streams that don't fit in memory.
 
+![Tri-stable system: OKBR at N=10^10 resolves the weak central attractor that KBR at N=5×10^7 cannot](assets/figure_2_python.png)
+
 Implements the method of *Davis 2023, PRE 108 054110* ([DOI:10.1103/PhysRevE.108.054110](https://doi.org/10.1103/PhysRevE.108.054110)).
 
 ## Quick start
