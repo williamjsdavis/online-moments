@@ -1,6 +1,6 @@
 # online_moments
 
-A Python port of [`OnlineMoments.jl`](github.com/williamjsdavis/OnlineMoments.jl) — streaming, `O(1)`-space estimators
+A Python port of [`OnlineMoments.jl`](https://github.com/williamjsdavis/OnlineMoments.jl) — streaming, `O(1)`-space estimators
 for conditional moments of stochastic-process increments. Recovers drift `D^(1)(x)` and
 diffusion `D^(2)(x)` of a Langevin SDE from time-series data of arbitrary length, including
 data streams that don't fit in memory.
