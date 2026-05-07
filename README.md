@@ -28,11 +28,18 @@ The method is described in:
 
 ## Install
 
+The project uses [`uv`](https://docs.astral.sh/uv/) for environment management:
+
 ```bash
-pip install -e .[dev]
+uv sync                                      # create venv + install package and dev deps from uv.lock
+uv run pytest                                # run the 73-test suite
+uv run python validation/figure_1_ou.py --smoke   # render validation figures
 ```
 
-Requires Python 3.11+. The streaming inner loop uses Numba; first call has a ~3 second JIT cold-start, cached thereafter.
+Python 3.12 is pinned via `.python-version`. All dependencies are declared in
+`pyproject.toml` and locked exactly in `uv.lock`. Plain `pip install -e .`
+also works if you prefer not to use uv. The streaming inner loop uses Numba;
+first call has a ~3 second JIT cold-start, cached thereafter.
 
 ## Quick start
 
@@ -121,11 +128,11 @@ Eleven intentional behavioural differences from the Julia reference are catalogu
 ## Verification
 
 ```bash
-pytest tests/ -v                              # 73 tests: unit + offline + online equivalence
-bash validation/run_smoke.sh                  # validation figures at CI sizes (~3 min)
-python validation/figure_1_ou.py        --full   # paper-sized N=10^10 reproduction (~10 min)
-python validation/figure_2_tristable.py --full   # paper-sized N=10^10 reproduction (~40 min)
-python validation/figure_table_1_scaling.py --full   # full N=1e4..1e10 scaling sweep (~10 min)
+uv run pytest tests/ -v                                  # 73 tests: unit + offline + online equivalence
+uv run bash validation/run_smoke.sh                      # validation figures at CI sizes (~3 min)
+uv run python validation/figure_1_ou.py        --full   # paper-sized N=10^10 reproduction (~10 min)
+uv run python validation/figure_2_tristable.py --full   # paper-sized N=10^10 reproduction (~40 min)
+uv run python validation/figure_table_1_scaling.py --full   # full N=1e4..1e10 scaling sweep (~10 min)
 ```
 
 ## License

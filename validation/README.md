@@ -9,7 +9,7 @@ and diffusion → save a PNG.
 ## Quick smoke (CI sizes, ~3 min total)
 
 ```bash
-bash validation/run_smoke.sh
+uv run bash validation/run_smoke.sh
 ```
 
 Generates:
@@ -22,9 +22,9 @@ Generates:
 ## Full-sized reproductions (manual, longer)
 
 ```bash
-python validation/figure_1_ou.py        --full   # N=1e7 + N=1e10, ~10 min
-python validation/figure_2_tristable.py --full   # N=5e7 + N=1e10, ~40 min
-python validation/figure_table_1_scaling.py --full   # N=1e4..1e10, ~10 min
+uv run python validation/figure_1_ou.py        --full   # N=1e7 + N=1e10, ~10 min
+uv run python validation/figure_2_tristable.py --full   # N=5e7 + N=1e10, ~40 min
+uv run python validation/figure_table_1_scaling.py --full   # N=1e4..1e10, ~10 min
 ```
 
 The `N=1e10` traces use a chunked simulator so the time series is never fully
