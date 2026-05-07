@@ -11,8 +11,8 @@ license = {file = "LICENSE"}
 authors = [{name = "William Davis"}]
 requires-python = ">=3.11"
 dependencies = [
-    "numpy>=1.26",
-    "numba>=0.59",
+    "numpy>=2.0",
+    "numba>=0.60",
 ]
 
 [dependency-groups]

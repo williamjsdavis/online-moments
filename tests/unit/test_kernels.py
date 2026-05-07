@@ -3,9 +3,6 @@ import pytest
 
 from online_moments.kernels import Boxcar, Epanechnikov, apply_kernel
 
-# np.trapz was renamed to np.trapezoid in NumPy 2.0; support both.
-trapezoid = getattr(np, "trapezoid", None) or np.trapz
-
 
 def test_boxcar_value_at_zero():
     assert Boxcar()(0.0) == 0.5
@@ -37,7 +34,7 @@ def test_epanechnikov_support():
 def test_kernel_integrates_to_one(kernel):
     x = np.linspace(-2.0, 2.0, 100_001)
     y = np.array([kernel(xi) for xi in x])
-    integral = trapezoid(y, x)
+    integral = np.trapezoid(y, x)
     assert abs(integral - 1.0) < 1e-3
 
 
@@ -47,7 +44,7 @@ def test_bandwidth_scaling_preserves_normalization(kernel, h):
     hinv = 1.0 / h
     x = np.linspace(-3.0 * h, 3.0 * h, 200_001)
     y = np.array([apply_kernel(xi, kernel, hinv) for xi in x])
-    integral = trapezoid(y, x)
+    integral = np.trapezoid(y, x)
     assert abs(integral - 1.0) < 1e-3
 
 
@@ -55,6 +52,6 @@ def test_epanechnikov_second_moment():
     k = Epanechnikov()
     x = np.linspace(-1.0, 1.0, 100_001)
     y = np.array([k(xi) for xi in x])
-    second_moment = trapezoid(x * x * y, x)
+    second_moment = np.trapezoid(x * x * y, x)
     # Standard convention: variance is 1/5 = 0.2
     assert abs(second_moment - 0.2) < 1e-3

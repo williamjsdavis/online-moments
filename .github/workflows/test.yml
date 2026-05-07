@@ -13,9 +13,8 @@ jobs:
       fail-fast: false
       matrix:
         python-version: ["3.11", "3.12"]
-        numpy-version: ["1.26", "2.1"]
 
-    name: "py${{ matrix.python-version }} / numpy ${{ matrix.numpy-version }}"
+    name: "py${{ matrix.python-version }}"
 
     steps:
       - uses: actions/checkout@v4
@@ -30,9 +29,6 @@ jobs:
 
       - name: Install project (locked)
         run: uv sync --python ${{ matrix.python-version }}
-
-      - name: Pin NumPy version under test
-        run: uv pip install "numpy==${{ matrix.numpy-version }}.*"
 
       - name: Show resolved versions
         run: uv pip show numpy numba | grep -E "^(Name|Version)"
