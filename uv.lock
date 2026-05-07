@@ -539,8 +539,8 @@ dev = [
 
 [package.metadata]
 requires-dist = [
-    { name = "numba", specifier = ">=0.59" },
-    { name = "numpy", specifier = ">=1.26" },
+    { name = "numba", specifier = ">=0.60" },
+    { name = "numpy", specifier = ">=2.0" },
 ]
 
 [package.metadata.requires-dev]
